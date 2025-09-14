@@ -16,7 +16,7 @@ import Application from '~/components/Layout/Application'
 
 export function meta({}: MetaArgs) {
   return [
-    { title: 'BabyDiet.ca - Generate a unique meal for your baby' },
+    { title: 'Baby Diet' },
     { name: 'description', content: 'Generate a unique meal for your baby' },
   ]
 }
