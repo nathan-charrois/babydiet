@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react'
+import { useCallback } from 'react'
 import { Image } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { type PostPreferencesResponse } from '@shared/types/api'
@@ -17,6 +17,21 @@ import { useMealLibrary } from './MealLibraryContext'
 import { useAnimationTrigger } from '~/hooks/useAnimationTrigger'
 import { LOW_ACID_KEY, LOW_CARB_STORAGE_KEY } from '~/utils/constant'
 
+function ClickableImage() {
+  const { theme } = useDietTheme()
+
+  const { ref, handleTriggerAnimation } = useAnimationTrigger({
+    className: 'animate-headShake',
+    playSound: () => playBabySound(),
+  })
+
+  if (theme === 'baby') {
+    return <Image src="/images/baby.png" onClick={handleTriggerAnimation} ref={ref} />
+  }
+
+  return <Image src="/images/mommy.png" onClick={handleTriggerAnimation} ref={ref} />
+}
+
 export default function DietForm() {
   const { initialValues, preferencesByType, setPreference, validate } = useDietForm()
   const { setActiveStep } = useDietStep()
@@ -24,11 +39,6 @@ export default function DietForm() {
   const { addToLibrary } = useMealLibrary()
   const { theme } = useDietTheme()
   const form = useForm({ initialValues, validate })
-
-  const { ref, handleTriggerAnimation } = useAnimationTrigger({
-    className: 'animate-headShake',
-    playSound: () => playBabySound(),
-  })
 
   const [firstPreference, ...restPreferences] = preferencesByType.range
 
@@ -97,14 +107,6 @@ export default function DietForm() {
     }
   }
 
-  const image = useMemo(() => {
-    if (theme === 'baby') {
-      return <Image src="/images/baby.png" onClick={handleTriggerAnimation} ref={ref} />
-    }
-
-    return <Image src="/images/mommy.png" onClick={handleTriggerAnimation} ref={ref} />
-  }, [theme])
-
   return (
     <form onSubmit={form.onSubmit(handleSubmit)} onReset={form.reset}>
       <DietFormLayout
@@ -146,7 +148,7 @@ export default function DietForm() {
             onChange={handleOnButtonEnd(pref.key)}
           />
         ))}
-        image={image}
+        image={<ClickableImage />}
         actions={<DietFormActions />}
       />
     </form>
