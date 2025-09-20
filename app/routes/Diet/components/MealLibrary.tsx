@@ -8,7 +8,7 @@ import { useI18n } from './DietI18nProvider'
 import { useMealLibrary } from './MealLibraryContext'
 import MealLibraryDialog from './MealLibraryDialog'
 import { useIsMobile } from '~/hooks/useIsMobile'
-import { playSuccessSound } from '~/utils/sound'
+import { playButtonSound, playSuccessSound } from '~/utils/sound'
 
 export default function MealLibrary() {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
@@ -22,6 +22,7 @@ export default function MealLibrary() {
   )
 
   const handleOpenDialog = () => {
+    playButtonSound()
     setIsDialogOpen(true)
   }
 

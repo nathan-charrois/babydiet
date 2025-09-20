@@ -6,6 +6,7 @@ import { Button } from '@mantine/core'
 import { useI18n } from './DietI18nProvider'
 import DietSettingsModal from './DietSettingsModal'
 import { useIsMobile } from '~/hooks/useIsMobile'
+import { playButtonSound } from '~/utils/sound'
 
 export default function DietSettings() {
   const [opened, setOpened] = useState(false)
@@ -13,6 +14,7 @@ export default function DietSettings() {
   const isMobile = useIsMobile()
 
   const handleOpenSettings = useCallback(() => {
+    playButtonSound()
     setOpened(true)
   }, [setOpened])
 

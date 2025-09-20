@@ -142,6 +142,9 @@ export const buildMealPromptForBaby = (preferences: Preferences, language: strin
     Banned Ingredients:
     - Honey
     - Pepper
+    - Salt and Pepper
+    - Lemon
+    - Lemon Juice
 
     Preferences:
     ${preferencesString}
@@ -179,6 +182,7 @@ export const buildMealPromptForMommy = (preferences: Preferences, language: stri
     - Tomatoes
     - Garlic
     - Pepper
+    - Salt and Pepper
     - Lemon
     - Lemon Juice
 
