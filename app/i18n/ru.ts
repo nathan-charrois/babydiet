@@ -28,6 +28,7 @@ export const ru: Record<LanguageKey, string> = {
   language: 'Язык',
   play_sounds: 'Воспроизводить звуки',
   low_carb: 'Низкоуглеводный',
+  low_acid: 'Низкокислотный',
   apply: 'Применить',
   close: 'Закрыть',
 

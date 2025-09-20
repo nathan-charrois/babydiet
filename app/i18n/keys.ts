@@ -27,6 +27,7 @@ export const LANGUAGE_KEYS = [
   'language',
   'play_sounds',
   'low_carb',
+  'low_acid',
   'apply',
   'close',
 

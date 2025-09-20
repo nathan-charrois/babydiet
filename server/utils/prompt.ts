@@ -83,19 +83,33 @@ const buildLowCarbString = (lowCarb: boolean): string => {
 }
 
 /**
+ * Convert low acid boolean to a string
+ *
+ * @param lowAcid boolean if meal should be low carbs
+ */
+const buildLowAcidString = (lowAcid: boolean): string => {
+  if (!lowAcid) {
+    return ''
+  }
+
+  return 'Meal must be low acidity (GERD Safe)'
+}
+
+/**
  * Build the complete prompt for meal generation
  *
  * @param preferences key-pair of submitted preferences
  * @param language language code string
  * @param theme currently selected theme
- * @param lowCarb meal should have low carbohydrates
+ * @param lowCarb meal should have low carbohydrates ingredients
+ * @param lowAcid meal should contain low acid ingredients
  */
-export const buildMealPrompt = (preferences: Preferences, language: string, theme: string, lowCarb: boolean): string => {
+export const buildMealPrompt = (preferences: Preferences, language: string, theme: string, lowCarb: boolean, lowAcid: boolean): string => {
   if (theme === 'baby') {
-    return buildMealPromptForBaby(preferences, language, lowCarb)
+    return buildMealPromptForBaby(preferences, language, lowCarb, lowAcid)
   }
 
-  return buildMealPromptForMommy(preferences, language, lowCarb)
+  return buildMealPromptForMommy(preferences, language, lowCarb, lowAcid)
 }
 
 /**
@@ -103,11 +117,13 @@ export const buildMealPrompt = (preferences: Preferences, language: string, them
  *
  * @param preferences key-pair of submitted preferences
  * @param language language code string
- * @param lowCarb meal should have low carbohydrates
+ * @param lowCarb meal should have low carbohydrates ingredients
+ * @param lowAcid meal should contain low acid ingredients
  */
-export const buildMealPromptForBaby = (preferences: Preferences, language: string, lowCarb: boolean): string => {
+export const buildMealPromptForBaby = (preferences: Preferences, language: string, lowCarb: boolean, lowAcid: boolean): string => {
   const preferencesString = buildPreferencesString(preferences)
   const lowCarbString = buildLowCarbString(lowCarb)
+  const lowAcidString = buildLowAcidString(lowAcid)
 
   return `
     You are a creative chef specializing in fun and unique meals for toddlers.
@@ -118,6 +134,7 @@ export const buildMealPromptForBaby = (preferences: Preferences, language: strin
     - Ingredients should be healthy and suitable for toddlers.
     - Language code is provided for localization.
     - ${lowCarbString}
+    - ${lowAcidString}
 
     Banned Food:
     - Pancakes
@@ -139,11 +156,13 @@ export const buildMealPromptForBaby = (preferences: Preferences, language: strin
  *
  * @param preferences key-pair of submitted preferences
  * @param language language code string
- * @param lowCarb meal should have low carbohydrates
+ * @param lowCarb meal should have low carbohydrates ingredients
+ * @param lowAcid meal should contain low acid ingredients
  */
-export const buildMealPromptForMommy = (preferences: Preferences, language: string, lowCarb: boolean): string => {
+export const buildMealPromptForMommy = (preferences: Preferences, language: string, lowCarb: boolean, lowAcid: boolean): string => {
   const preferencesString = buildPreferencesString(preferences)
   const lowCarbString = buildLowCarbString(lowCarb)
+  const lowAcidString = buildLowAcidString(lowAcid)
 
   return `
     You are a creative chef specializing in safe and healthy meals for pregnant women.
@@ -154,14 +173,14 @@ export const buildMealPromptForMommy = (preferences: Preferences, language: stri
     - Ingredients should be healthy and safe for pregnant women.
     - Language code is provided for localization.
     - ${lowCarbString}
+    - ${lowAcidString}
 
-    Do NOT include these ingredients:
+    Banned ingredients:
     - Tomatoes
     - Garlic
     - Pepper
     - Lemon
-    - Onion
-    - Sugar
+    - Lemon Juice
 
     Preferences:
     ${preferencesString}

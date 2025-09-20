@@ -15,7 +15,7 @@ import { useDietStep } from './DietStepContext'
 import { useDietTheme } from './DietThemeContext'
 import { useMealLibrary } from './MealLibraryContext'
 import { useAnimationTrigger } from '~/hooks/useAnimationTrigger'
-import { LOW_CARB_STORAGE_KEY } from '~/utils/constant'
+import { LOW_ACID_KEY, LOW_CARB_STORAGE_KEY } from '~/utils/constant'
 
 export default function DietForm() {
   const { initialValues, preferencesByType, setPreference, validate } = useDietForm()
@@ -67,6 +67,9 @@ export default function DietForm() {
     const storedLowCarb = localStorage.getItem(LOW_CARB_STORAGE_KEY)
     const lowCarb = storedLowCarb !== null ? storedLowCarb === 'true' : false
 
+    const storedLowAcid = localStorage.getItem(LOW_ACID_KEY)
+    const lowAcid = storedLowCarb !== null ? storedLowAcid === 'true' : false
+
     try {
       const response = await fetchData<PostPreferencesResponse>({
         url: `/preferences`,
@@ -75,6 +78,7 @@ export default function DietForm() {
           ...formValues,
           theme,
           lowCarb,
+          lowAcid,
         },
       })
 

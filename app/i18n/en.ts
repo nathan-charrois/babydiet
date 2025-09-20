@@ -28,6 +28,7 @@ export const en: Record<LanguageKey, string> = {
   language: 'Language',
   play_sounds: 'Play sounds',
   low_carb: 'Low carbohydrates',
+  low_acid: 'Low acid',
   apply: 'Apply',
   close: 'Close',
 

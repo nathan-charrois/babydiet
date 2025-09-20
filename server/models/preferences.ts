@@ -161,7 +161,9 @@ export const getLanguage = (req: Request): SupportedLanguage => {
 }
 
 export const getTheme = (req: Request): 'baby' | 'mommy' => {
-  const theme = req.query.theme as string | undefined
+  const theme = req.query && req.query.theme
+    ? req.query.theme
+    : req.body.theme
 
   if (theme === 'baby' || theme === 'mommy') {
     return theme
@@ -180,6 +182,16 @@ export const getLowCarb = (req: Request): boolean => {
   return true
 }
 
+export const getLowAcid = (req: Request): boolean => {
+  const lowAcid = req.body.lowAcid as boolean | undefined
+
+  if (!lowAcid) {
+    return false
+  }
+
+  return true
+}
+
 export const handlePostPreferences = async (
   req: Request,
   res: Response<PostPreferencesResponse>,
@@ -189,8 +201,10 @@ export const handlePostPreferences = async (
     const language = getLanguage(req)
     const theme = getTheme(req)
     const lowCarb = getLowCarb(req)
+    const lowAcid = getLowAcid(req)
 
-    const mealPrompt = buildMealPrompt(req.body, language, theme, lowCarb)
+    const mealPrompt = buildMealPrompt(req.body, language, theme, lowCarb, lowAcid)
+    console.log({ theme, lowCarb, lowAcid, mealPrompt })
     const { title, ingredients } = await generateMeal(mealPrompt)
 
     const imagePrompt = buildImagePrompt(title, ingredients, theme)

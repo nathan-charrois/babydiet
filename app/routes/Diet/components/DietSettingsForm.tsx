@@ -13,6 +13,7 @@ interface SettingsState {
   language: SupportedLanguage
   soundEnabled: boolean
   lowCarbEnabled: boolean
+  lowAcidEnabled: boolean
 }
 
 interface DietSettingsFormProps {
@@ -29,6 +30,10 @@ export default function DietSettingsForm({ settings, onSettingsChange }: DietSet
 
   const handleLowCarbToggle = useCallback((lowCarbEnabled: boolean) => {
     onSettingsChange({ ...settings, lowCarbEnabled })
+  }, [settings, onSettingsChange])
+
+  const handleLowAcidToggle = useCallback((lowAcidEnabled: boolean) => {
+    onSettingsChange({ ...settings, lowAcidEnabled })
   }, [settings, onSettingsChange])
 
   const handleLanguageChange = useCallback((event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -56,6 +61,11 @@ export default function DietSettingsForm({ settings, onSettingsChange }: DietSet
         label={formatMessage('low_carb')}
         checked={settings.lowCarbEnabled}
         onChange={event => handleLowCarbToggle(event.currentTarget.checked)}
+      />
+      <Checkbox
+        label={formatMessage('low_acid')}
+        checked={settings.lowAcidEnabled}
+        onChange={event => handleLowAcidToggle(event.currentTarget.checked)}
       />
     </Stack>
   )
