@@ -170,6 +170,16 @@ export const getTheme = (req: Request): 'baby' | 'mommy' => {
   return 'baby'
 }
 
+export const getLowCarb = (req: Request): boolean => {
+  const lowCarb = req.body.lowCarb as boolean | undefined
+
+  if (!lowCarb) {
+    return false
+  }
+
+  return true
+}
+
 export const handlePostPreferences = async (
   req: Request,
   res: Response<PostPreferencesResponse>,
@@ -177,11 +187,13 @@ export const handlePostPreferences = async (
 ) => {
   try {
     const language = getLanguage(req)
+    const theme = getTheme(req)
+    const lowCarb = getLowCarb(req)
 
-    const mealPrompt = buildMealPrompt(req.body, language, req.body.theme)
+    const mealPrompt = buildMealPrompt(req.body, language, theme, lowCarb)
     const { title, ingredients } = await generateMeal(mealPrompt)
 
-    const imagePrompt = buildImagePrompt(title, ingredients, req.body.theme)
+    const imagePrompt = buildImagePrompt(title, ingredients, theme)
     const { image } = await generateImage(imagePrompt)
 
     res.status(200).json({ title, ingredients, image })

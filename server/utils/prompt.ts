@@ -7,7 +7,6 @@ export interface Preferences {
  *
  * @param key preference range (e.g., "hot-cold")
  * @param level preference level (0-20)
- * @returns formatted preference string
  */
 const buildPreference = (key: string, level: number): string => {
   const isPreferenceTypeRange = key.includes('-')
@@ -25,7 +24,6 @@ const buildPreference = (key: string, level: number): string => {
  *
  * @param key preference range (e.g., "hot-cold")
  * @param level preference level (0-20)
- * @returns formatted preference string
  */
 const buildRangePreference = (key: string, level: number): string => {
   let descriptor = ''
@@ -48,7 +46,6 @@ const buildRangePreference = (key: string, level: number): string => {
  *
  * @param key preference range (e.g., "veggie_boost")
  * @param level preference level (0-20)
- * @returns formatted preference string
  */
 const buildBooleanPreference = (key: string, level: number): string => {
   const parsedKey = key.replaceAll('_', ' ')
@@ -65,7 +62,6 @@ const buildBooleanPreference = (key: string, level: number): string => {
  * Convert preferences object to a comma-separated string of all preferences
  *
  * @param preferences object containing preference categories and their levels
- * @returns comma-separated string of all preferences
  */
 const buildPreferencesString = (preferences: Preferences): string => {
   return Object.entries(preferences)
@@ -74,30 +70,44 @@ const buildPreferencesString = (preferences: Preferences): string => {
 }
 
 /**
+ * Convert low carb boolean to a string
+ *
+ * @param lowCarb boolean if meal should be low carbs
+ */
+const buildLowCarbString = (lowCarb: boolean): string => {
+  if (!lowCarb) {
+    return ''
+  }
+
+  return 'Meal must contain low carbohydrates (less than 50mg)'
+}
+
+/**
  * Build the complete prompt for meal generation
  *
  * @param preferences key-pair of submitted preferences
- * @param languageString language code string
+ * @param language language code string
  * @param theme currently selected theme
- * @returns complete formatted prompt for meal generation
+ * @param lowCarb meal should have low carbohydrates
  */
-export const buildMealPrompt = (preferences: Preferences, languageString: string, theme: string): string => {
+export const buildMealPrompt = (preferences: Preferences, language: string, theme: string, lowCarb: boolean): string => {
   if (theme === 'baby') {
-    return buildMealPromptForBaby(preferences, languageString)
+    return buildMealPromptForBaby(preferences, language, lowCarb)
   }
 
-  return buildMealPromptForMommy(preferences, languageString)
+  return buildMealPromptForMommy(preferences, language, lowCarb)
 }
 
 /**
  * Build meal prompt for baby
  *
  * @param preferences key-pair of submitted preferences
- * @param languageString language code string
- * @returns complete formatted prompt for meal generation
+ * @param language language code string
+ * @param lowCarb meal should have low carbohydrates
  */
-export const buildMealPromptForBaby = (preferences: Preferences, languageString: string): string => {
+export const buildMealPromptForBaby = (preferences: Preferences, language: string, lowCarb: boolean): string => {
   const preferencesString = buildPreferencesString(preferences)
+  const lowCarbString = buildLowCarbString(lowCarb)
 
   return `
     You are a creative chef specializing in fun and unique meals for toddlers.
@@ -107,6 +117,7 @@ export const buildMealPromptForBaby = (preferences: Preferences, languageString:
     - Meal title should not include words from the preferences.
     - Ingredients should be healthy and suitable for toddlers.
     - Language code is provided for localization.
+    - ${lowCarbString}
 
     Banned Food:
     - Pancakes
@@ -119,7 +130,7 @@ export const buildMealPromptForBaby = (preferences: Preferences, languageString:
     ${preferencesString}
 
     Language Code:
-    ${languageString}
+    ${language}
   `
 }
 
@@ -127,11 +138,12 @@ export const buildMealPromptForBaby = (preferences: Preferences, languageString:
  * Build meal prompt for mommy
  *
  * @param preferences key-pair of submitted preferences
- * @param languageString language code string
- * @returns complete formatted prompt for meal generation
+ * @param language language code string
+ * @param lowCarb meal should have low carbohydrates
  */
-export const buildMealPromptForMommy = (preferences: Preferences, languageString: string): string => {
+export const buildMealPromptForMommy = (preferences: Preferences, language: string, lowCarb: boolean): string => {
   const preferencesString = buildPreferencesString(preferences)
+  const lowCarbString = buildLowCarbString(lowCarb)
 
   return `
     You are a creative chef specializing in safe and healthy meals for pregnant women.
@@ -141,6 +153,7 @@ export const buildMealPromptForMommy = (preferences: Preferences, languageString
     - Meal title should not include words from the preferences.
     - Ingredients should be healthy and safe for pregnant women.
     - Language code is provided for localization.
+    - ${lowCarbString}
 
     Do NOT include these ingredients:
     - Tomatoes
@@ -154,7 +167,7 @@ export const buildMealPromptForMommy = (preferences: Preferences, languageString
     ${preferencesString}
 
     Language Code:
-    ${languageString}
+    ${language}
   `
 }
 
@@ -164,7 +177,6 @@ export const buildMealPromptForMommy = (preferences: Preferences, languageString
  * @param title generated meal title
  * @param ingredients generated meal ingredients
  * @param theme currently selected theme
- * @returns complete formatted prompt for meal image generation
  */
 export const buildImagePrompt = (title: string, ingredients: string[], theme: string): string => {
   if (theme === 'baby') {
@@ -179,7 +191,6 @@ export const buildImagePrompt = (title: string, ingredients: string[], theme: st
  *
  * @param title generated meal title
  * @param ingredients generated meal ingredients
- * @returns complete formatted prompt for meal image generation
  */
 export const buildImagePromptForBaby = (title: string, ingredients: string[]): string => {
   return `
@@ -204,7 +215,6 @@ export const buildImagePromptForBaby = (title: string, ingredients: string[]): s
  *
  * @param title generated meal title
  * @param ingredients generated meal ingredients
- * @returns complete formatted prompt for meal image generation
  */
 export const buildImagePromptForMommy = (title: string, ingredients: string[]): string => {
   return `
