@@ -1,16 +1,12 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Modal, Stack } from '@mantine/core'
-import {
-  isSupportedLangauge,
-  LANGUAGE_STORAGE_KEY,
-  type SupportedLanguage,
-} from '@shared/types/i18n'
+import { isSupportedLangauge, type SupportedLanguage } from '@shared/types/i18n'
 import { detectLanguage } from '@utils/languageDetection'
-import { SOUND_STORAGE_KEY } from '@utils/sound'
 
 import { useI18n } from './DietI18nProvider'
 import DietSettingsActions from './DietSettingsActions'
 import DietSettingsForm from './DietSettingsForm'
+import { LANGUAGE_STORAGE_KEY, LOW_CARB_STORAGE_KEY, SOUND_STORAGE_KEY } from '~/utils/constant'
 
 interface DietSettingsModalProps {
   opened: boolean
@@ -20,26 +16,36 @@ interface DietSettingsModalProps {
 interface SettingsState {
   language: SupportedLanguage
   soundEnabled: boolean
+  lowCarbEnabled: boolean
 }
 
 const loadSettingsFromStorage = (): SettingsState => {
   const storedLanguage = localStorage.getItem(LANGUAGE_STORAGE_KEY)
   const storedSound = localStorage.getItem(SOUND_STORAGE_KEY)
+  const storedLowCarb = localStorage.getItem(LOW_CARB_STORAGE_KEY)
 
   const language = isSupportedLangauge(storedLanguage) ? storedLanguage : detectLanguage()
-  const soundEnabled = storedSound !== null ? storedSound === 'true' : true
+  const soundEnabled = storedSound !== null ? storedSound === 'true' : false
+  const lowCarbEnabled = storedLowCarb !== null ? storedLowCarb === 'true' : false
 
-  return { language, soundEnabled }
+  return { language, soundEnabled, lowCarbEnabled }
 }
 
 const saveSettingsToStorage = (settings: SettingsState) => {
   localStorage.setItem(LANGUAGE_STORAGE_KEY, settings.language)
   localStorage.setItem(SOUND_STORAGE_KEY, settings.soundEnabled.toString())
+  localStorage.setItem(LOW_CARB_STORAGE_KEY, settings.lowCarbEnabled.toString())
+}
+
+const initialState: SettingsState = {
+  language: 'en',
+  soundEnabled: false,
+  lowCarbEnabled: false,
 }
 
 export default function DietSettingsModal({ opened, onClose }: DietSettingsModalProps) {
-  const [currentSettings, setCurrentSettings] = useState<SettingsState>({ language: 'en', soundEnabled: true })
-  const [tempSettings, setTempSettings] = useState<SettingsState>({ language: 'en', soundEnabled: true })
+  const [currentSettings, setCurrentSettings] = useState<SettingsState>(initialState)
+  const [tempSettings, setTempSettings] = useState<SettingsState>(initialState)
   const { formatMessage } = useI18n()
 
   useEffect(() => {
@@ -57,8 +63,9 @@ export default function DietSettingsModal({ opened, onClose }: DietSettingsModal
   const handleApply = useCallback(() => {
     const hasLanguageChanged = tempSettings.language !== currentSettings.language
     const hasSoundChanged = tempSettings.soundEnabled !== currentSettings.soundEnabled
+    const hasLowCarbChanged = tempSettings.lowCarbEnabled !== currentSettings.lowCarbEnabled
 
-    if (hasLanguageChanged || hasSoundChanged) {
+    if (hasLanguageChanged || hasSoundChanged || hasLowCarbChanged) {
       setCurrentSettings(tempSettings)
       saveSettingsToStorage(tempSettings)
 

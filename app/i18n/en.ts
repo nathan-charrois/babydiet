@@ -27,6 +27,7 @@ export const en: Record<LanguageKey, string> = {
   settings: 'Settings',
   language: 'Language',
   play_sounds: 'Play sounds',
+  low_carb: 'Low carbohydrates',
   apply: 'Apply',
   close: 'Close',
 

@@ -1,8 +1,6 @@
-import {
-  isSupportedLangauge,
-  LANGUAGE_STORAGE_KEY,
-  type SupportedLanguage,
-} from '@shared/types/i18n'
+import { isSupportedLangauge, type SupportedLanguage } from '@shared/types/i18n'
+
+import { LANGUAGE_STORAGE_KEY } from './constant'
 
 export function detectLanguage(): SupportedLanguage {
   if (typeof localStorage !== 'undefined') {

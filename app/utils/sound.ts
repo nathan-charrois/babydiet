@@ -1,4 +1,4 @@
-export const SOUND_STORAGE_KEY = 'baby-diet-sound-enabled'
+import { SOUND_STORAGE_KEY } from './constant'
 
 let buttonSound: HTMLAudioElement | null = null
 let slideUpSound: HTMLAudioElement | null = null
@@ -12,7 +12,7 @@ const isSoundEnabled = (): boolean => {
   if (typeof Audio === 'undefined') return false
 
   const storedSound = localStorage.getItem(SOUND_STORAGE_KEY)
-  return storedSound !== null ? storedSound === 'true' : true
+  return storedSound !== null ? storedSound === 'true' : false
 }
 
 const getButtonSound = (): HTMLAudioElement => {

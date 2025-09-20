@@ -12,6 +12,7 @@ const LANGUAGE_OPTIONS = [
 interface SettingsState {
   language: SupportedLanguage
   soundEnabled: boolean
+  lowCarbEnabled: boolean
 }
 
 interface DietSettingsFormProps {
@@ -24,6 +25,10 @@ export default function DietSettingsForm({ settings, onSettingsChange }: DietSet
 
   const handleSoundToggle = useCallback((soundEnabled: boolean) => {
     onSettingsChange({ ...settings, soundEnabled })
+  }, [settings, onSettingsChange])
+
+  const handleLowCarbToggle = useCallback((lowCarbEnabled: boolean) => {
+    onSettingsChange({ ...settings, lowCarbEnabled })
   }, [settings, onSettingsChange])
 
   const handleLanguageChange = useCallback((event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -46,6 +51,11 @@ export default function DietSettingsForm({ settings, onSettingsChange }: DietSet
         label={formatMessage('play_sounds')}
         checked={settings.soundEnabled}
         onChange={event => handleSoundToggle(event.currentTarget.checked)}
+      />
+      <Checkbox
+        label={formatMessage('low_carb')}
+        checked={settings.lowCarbEnabled}
+        onChange={event => handleLowCarbToggle(event.currentTarget.checked)}
       />
     </Stack>
   )
