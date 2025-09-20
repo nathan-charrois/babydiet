@@ -1,6 +1,8 @@
 import { createContext, useCallback, useContext, useEffect, useState } from 'react'
 import { type DietMeal } from '@shared/types/context'
 
+import { MEAL_LIBRARY_STORAGE_KEY } from '~/utils/constant'
+
 interface MealLibraryContextType {
   meals: DietMeal[]
   count: number
@@ -9,8 +11,6 @@ interface MealLibraryContextType {
 }
 
 const MealLibraryContext = createContext<MealLibraryContextType | undefined>(undefined)
-
-const LOCAL_STORAGE_KEY = 'mealLibrary'
 
 const createThumbnail = async (base64: string) => {
   const thumb = new Image()
@@ -36,7 +36,7 @@ export function MealLibraryProvider({ children }: { children: React.ReactNode })
 
   useEffect(() => {
     if (typeof localStorage !== 'undefined') {
-      const savedMeals = localStorage.getItem(LOCAL_STORAGE_KEY)
+      const savedMeals = localStorage.getItem(MEAL_LIBRARY_STORAGE_KEY)
       const parsedMeals = savedMeals ? JSON.parse(savedMeals) : []
 
       if (Array.isArray(parsedMeals)) {
@@ -54,19 +54,21 @@ export function MealLibraryProvider({ children }: { children: React.ReactNode })
     }
 
     try {
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newMeal))
+      setMeals((prevMeals) => {
+        const newMeals = [...prevMeals, newMeal]
+        localStorage.setItem(MEAL_LIBRARY_STORAGE_KEY, JSON.stringify(newMeals))
+        return newMeals
+      })
     }
     catch (e) {
-      console.error(`Error settings localStorage ${LOCAL_STORAGE_KEY}`, e)
+      console.error(`Error settings localStorage ${MEAL_LIBRARY_STORAGE_KEY}`, e)
     }
-
-    setMeals(prevMeals => [...prevMeals, newMeal])
   }, [])
 
   const removeFromLibrary = useCallback((id: string) => {
     setMeals((prevMeals) => {
       const newMeals = prevMeals.filter(meal => meal.id !== id)
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newMeals))
+      localStorage.setItem(MEAL_LIBRARY_STORAGE_KEY, JSON.stringify(newMeals))
       return newMeals
     })
   }, [])

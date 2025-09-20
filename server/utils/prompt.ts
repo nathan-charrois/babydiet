@@ -38,7 +38,7 @@ const buildRangePreference = (key: string, level: number): string => {
     strength = level - 10
   }
 
-  return `${descriptor} preference level ${strength}/10`
+  return `Meal is ${descriptor} (${strength}/10)`
 }
 
 /**
@@ -51,10 +51,10 @@ const buildBooleanPreference = (key: string, level: number): string => {
   const parsedKey = key.replaceAll('_', ' ')
 
   if (level) {
-    return `preference is ${parsedKey}`
+    return `Meal is ${parsedKey}`
   }
   else {
-    return `preference is NOT ${parsedKey}`
+    return ''
   }
 }
 
@@ -185,6 +185,7 @@ export const buildMealPromptForMommy = (preferences: Preferences, language: stri
     - Salt and Pepper
     - Lemon
     - Lemon Juice
+    - Lime Juice
 
     Preferences:
     ${preferencesString}

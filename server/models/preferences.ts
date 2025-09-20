@@ -204,6 +204,7 @@ export const handlePostPreferences = async (
     const lowAcid = getLowAcid(req)
 
     const mealPrompt = buildMealPrompt(req.body, language, theme, lowCarb, lowAcid)
+    console.log({ mealPrompt })
     const { title, ingredients } = await generateMeal(mealPrompt)
 
     const imagePrompt = buildImagePrompt(title, ingredients, theme)

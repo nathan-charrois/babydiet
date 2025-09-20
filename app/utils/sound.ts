@@ -27,7 +27,7 @@ const getButtonSound = (): HTMLAudioElement => {
 const getSlideUpSound = (): HTMLAudioElement => {
   if (!slideUpSound) {
     slideUpSound = new Audio('/sounds/drag-slider-up.wav')
-    slideUpSound.volume = 0.20
+    slideUpSound.volume = 0.15
   }
 
   return slideUpSound
@@ -36,7 +36,7 @@ const getSlideUpSound = (): HTMLAudioElement => {
 const getSlideDownSound = (): HTMLAudioElement => {
   if (!slideDownSound) {
     slideDownSound = new Audio('/sounds/drag-slider-down.wav')
-    slideDownSound.volume = 0.20
+    slideDownSound.volume = 0.15
   }
 
   return slideDownSound
