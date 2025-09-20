@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import { Checkbox, NativeSelect, Stack } from '@mantine/core'
+import { Checkbox, Divider, NativeSelect, Stack } from '@mantine/core'
 import { isSupportedLangauge, type SupportedLanguage } from '@shared/types/i18n'
 
 import { useI18n } from './DietI18nProvider'
@@ -46,27 +46,33 @@ export default function DietSettingsForm({ settings, onSettingsChange }: DietSet
 
   return (
     <Stack gap="lg">
+      <Divider />
       <NativeSelect
         label={formatMessage('language')}
         value={settings.language}
         onChange={handleLanguageChange}
         data={LANGUAGE_OPTIONS}
       />
+      <Divider my="sm" />
       <Checkbox
         label={formatMessage('play_sounds')}
+        description={formatMessage('play_sounds_desc')}
         checked={settings.soundEnabled}
         onChange={event => handleSoundToggle(event.currentTarget.checked)}
       />
       <Checkbox
         label={formatMessage('low_carb')}
+        description={formatMessage('low_carb_desc')}
         checked={settings.lowCarbEnabled}
         onChange={event => handleLowCarbToggle(event.currentTarget.checked)}
       />
       <Checkbox
         label={formatMessage('low_acid')}
         checked={settings.lowAcidEnabled}
+        description={formatMessage('low_acid_desc')}
         onChange={event => handleLowAcidToggle(event.currentTarget.checked)}
       />
+      <Divider />
     </Stack>
   )
 }

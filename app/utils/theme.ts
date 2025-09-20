@@ -24,7 +24,7 @@ export const themeBase = createTheme({
     xl: '75px',
   },
   lineHeights: {
-    xs: '0.7',
+    xs: '0.75',
     sm: '1',
     md: '1.2',
     lg: '1.5',
@@ -122,6 +122,13 @@ export const themeBase = createTheme({
       styles: (theme: MantineTheme) => ({
         root: {
           color: theme.colors.brand[theme.other.typography],
+        },
+      }),
+    },
+    Checkbox: {
+      styles: (theme: MantineTheme) => ({
+        description: {
+          lineHeight: theme.lineHeights.xs,
         },
       }),
     },

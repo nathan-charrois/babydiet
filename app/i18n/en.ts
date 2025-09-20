@@ -27,8 +27,11 @@ export const en: Record<LanguageKey, string> = {
   settings: 'Settings',
   language: 'Language',
   play_sounds: 'Play sounds',
+  play_sounds_desc: 'The user interface creates sounds.',
   low_carb: 'Low carbohydrates',
+  low_carb_desc: 'Generated meals contain less than 50mg of carbohydrates.',
   low_acid: 'Low acid',
+  low_acid_desc: 'Generated meals contain low acidity for sensitive stomachs.',
   apply: 'Apply',
   close: 'Close',
 

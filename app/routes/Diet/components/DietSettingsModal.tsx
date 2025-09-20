@@ -107,7 +107,7 @@ export default function DietSettingsModal({ opened, onClose }: DietSettingsModal
       opened={opened}
       onClose={handleClose}
       title={formatMessage('settings')}
-      size="sm"
+      size="md"
       withCloseButton={false}
     >
       <Stack gap="xl">

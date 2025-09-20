@@ -27,8 +27,11 @@ export const ru: Record<LanguageKey, string> = {
   settings: 'Настройки',
   language: 'Язык',
   play_sounds: 'Воспроизводить звуки',
+  play_sounds_desc: '',
   low_carb: 'Низкоуглеводный',
+  low_carb_desc: '',
   low_acid: 'Низкокислотный',
+  low_acid_desc: '',
   apply: 'Применить',
   close: 'Закрыть',
 
