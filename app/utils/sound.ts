@@ -82,7 +82,7 @@ export const playSuccessSound = () => {
 export const playButtonSound = () => {
   if (isSoundEnabled()) {
     const audio = getButtonSound()
-    audio.currentTime = 0.05
+    audio.currentTime = 0
     audio.play()
   }
 
