@@ -1,6 +1,6 @@
-# Nathan Software
+# Baby Diet
 
-For practice, not income.
+Generate a unique meal for your baby.
 
 ## Built With
 
@@ -79,7 +79,7 @@ If you're familiar with deploying Node applications, the built-in app server is 
 
 ### Deploy
 
-Code is deployed automatically by a [Vercel project](https://vercel.com/nathan-charrois-projects ) when changes are detected on `master` in this Github repository.
+Code is deployed automatically by a [Vercel project](https://vercel.com) when changes are detected on `master` in this Github repository.
 
 ---
 

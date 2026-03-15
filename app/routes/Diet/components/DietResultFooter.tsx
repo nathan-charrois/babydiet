@@ -15,7 +15,7 @@ export default function DietResultFooter() {
           <DietThemeSwitch />
         </Group>
         <Text size="xs" ta="center">
-          © 2025
+          © 2026
           <Anchor pl="xs" href="https://nathansoftware.ca" target="_blank">
             Nathan Software
           </Anchor>
