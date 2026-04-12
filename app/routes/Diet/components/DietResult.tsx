@@ -64,7 +64,7 @@ export default function DietResult() {
       </Stack>
       <Transition mounted={mounted} transition="fade" duration={600} timingFunction="ease-out">
         {styles => (
-          <Button style={styles} onClick={handleClickNextMeal}>
+          <Button style={styles} onClick={handleClickNextMeal} variant="primary">
             {formatMessage('next_meal')}
           </Button>
         )}
