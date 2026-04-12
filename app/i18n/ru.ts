@@ -2,11 +2,11 @@ import type { LanguageKey } from './keys'
 
 export const ru: Record<LanguageKey, string> = {
   // Error messages
-  error_saving_preferences: 'Что-то пошло не так!',
+  error_text: 'Что-то пошло не так!',
   try_again: 'Хорошо',
 
   // Loading messages
-  saving_preferences: 'Сохранение ваших предпочтений...',
+  spinner_text: 'Сохранение ваших предпочтений...',
 
   // Form actions
   submit: 'Отправить',

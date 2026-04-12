@@ -8,7 +8,7 @@ export default function DietSpinner() {
   return (
     <Stack align="center" py="xl">
       <Loader size="lg" />
-      <Text mt="md" ta="center">{formatMessage('saving_preferences')}</Text>
+      <Text mt="md" ta="center">{formatMessage('spinner_text')}</Text>
     </Stack>
   )
 }

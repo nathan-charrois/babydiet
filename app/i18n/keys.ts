@@ -1,11 +1,11 @@
 // Define all language keys as a const array
 export const LANGUAGE_KEYS = [
   // Error messages
-  'error_saving_preferences',
+  'error_text',
   'try_again',
 
   // Loading messages
-  'saving_preferences',
+  'spinner_text',
 
   // Form actions
   'submit',
